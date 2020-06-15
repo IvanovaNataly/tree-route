@@ -13,7 +13,7 @@ import { SharedService } from '../../services/shared.service';
 export class TreeComponent implements OnInit, OnDestroy {
   public tree: Array<any>;
   private subscriptions: SubscriptionLike[] = [];
-  serverError: boolean;
+  public serverError: boolean;
 
   constructor( private treeService: TreeService,
                private sharedService: SharedService,

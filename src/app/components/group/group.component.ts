@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SubscriptionLike } from 'rxjs/index';
 import { SharedService } from '../../services/shared.service';
+import { TreeService } from '../../services/tree.service';
 
 @Component({
   selector: 'app-group',
@@ -13,16 +14,18 @@ export class GroupComponent implements OnInit, OnDestroy {
   private subscriptions: SubscriptionLike[] = [];
   private tree: any;
   public children: any;
+  public serverError: boolean;
 
   constructor( private route: ActivatedRoute,
                private sharedService: SharedService,
+               private treeService: TreeService,
                private router: Router ) { }
 
   ngOnInit(): void {
     this.subscriptions.push(
       this.route.params.subscribe((params: any) => {
         this.id = params.id;
-        this.getTree();
+        this.getSharedTree();
       })
     );
   }
@@ -32,7 +35,7 @@ export class GroupComponent implements OnInit, OnDestroy {
     this.subscriptions = [];
   }
 
-  getTree() {
+  getSharedTree() {
     this.sharedService.getData().subscribe((tree: any) => {
       this.tree = tree;
       if (tree) {
@@ -41,7 +44,24 @@ export class GroupComponent implements OnInit, OnDestroy {
         }
         console.log(this.children);
       }
+      else {
+        this.getTree();
+      }
     });
+  }
+
+  getTree() {
+    this.subscriptions.push(
+      this.treeService.getTree().subscribe(resp => {
+        if (resp && resp.length) {
+          this.sharedService.setData(resp);
+          this.tree = resp;
+        }
+        else {
+          this.serverError = true;
+        }
+      })
+    );
   }
 
   findGroup(group) {
