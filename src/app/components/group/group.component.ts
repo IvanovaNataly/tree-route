@@ -1,7 +1,7 @@
-import {Component, OnDestroy, OnInit, OnDestroy} from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnDestroy, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SubscriptionLike } from 'rxjs/index';
-import {SharedService} from "../../services/shared.service";
+import { SharedService } from '../../services/shared.service';
 
 @Component({
   selector: 'app-group',
@@ -15,7 +15,8 @@ export class GroupComponent implements OnInit, OnDestroy {
   public children: any;
 
   constructor( private route: ActivatedRoute,
-               private sharedService: SharedService ) { }
+               private sharedService: SharedService,
+               private router: Router ) { }
 
   ngOnInit(): void {
     this.subscriptions.push(
@@ -52,6 +53,15 @@ export class GroupComponent implements OnInit, OnDestroy {
       for (const child of group.children) {
         this.findGroup(child);
       }
+    }
+  }
+
+  navigateTo(event) {
+    if (event.node.data.children) {
+      this.router.navigate(['/group/', event.node.data.name.toLowerCase()]);
+    }
+    else {
+      this.router.navigate(['/item/', event.node.data.name.toLowerCase()]);
     }
   }
 }

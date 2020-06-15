@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { TreeService } from '../../services/tree.service';
 import { Group } from '../../interfaces/group.interface';
 import { SubscriptionLike } from 'rxjs';
-import {SharedService} from "../../services/shared.service";
+import { SharedService } from '../../services/shared.service';
 
 @Component({
   selector: 'app-tree',
@@ -17,7 +17,7 @@ export class TreeComponent implements OnInit, OnDestroy {
 
   constructor( private treeService: TreeService,
                private sharedService: SharedService,
-               private router: Router,) {}
+               private router: Router ) {}
 
   ngOnInit(): void {
     this.subscriptions.push(
