@@ -6,6 +6,9 @@ import { AppComponent } from './app.component';
 import { TreeComponent } from './components/tree/tree.component';
 import { GroupComponent } from './components/group/group.component';
 import { ItemComponent } from './components/item/item.component';
+import { TreeModule } from 'angular-tree-component';
+import { TreeService } from './services/tree.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -16,9 +19,11 @@ import { ItemComponent } from './components/item/item.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    TreeModule.forRoot()
   ],
-  providers: [],
+  providers: [TreeService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,1 +1,9 @@
-<p>tree works!</p>
+<div class="wrapper">
+  <tree-root *ngIf="tree && tree.length; else growingUp"
+             [nodes]="tree"
+             [options]="options"
+             (activate)="navigateTo($event)"></tree-root>
+
+  <ng-template #growingUp>the tree is growing up...</ng-template>
+</div>
+
