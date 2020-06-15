@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { TreeService } from '../../services/tree.service';
 import { Group } from '../../interfaces/group.interface';
 import { SubscriptionLike } from 'rxjs';
+import {SharedService} from "../../services/shared.service";
 
 @Component({
   selector: 'app-tree',
@@ -12,20 +13,21 @@ import { SubscriptionLike } from 'rxjs';
 export class TreeComponent implements OnInit, OnDestroy {
   public tree: Array<any>;
   private subscriptions: SubscriptionLike[] = [];
+  serverError: boolean;
 
   constructor( private treeService: TreeService,
+               private sharedService: SharedService,
                private router: Router,) {}
 
   ngOnInit(): void {
     this.subscriptions.push(
       this.treeService.getTree().subscribe(resp => {
-        console.log('response', resp);
         if (resp && resp.length) {
+          this.sharedService.setData(resp);
           this.tree = resp;
-          console.log('group', this.tree);
         }
         else {
-          console.log('No controllers for this site');
+          this.serverError = true;
         }
       })
     );
@@ -37,7 +39,11 @@ export class TreeComponent implements OnInit, OnDestroy {
   }
 
   navigateTo(event) {
-    console.log(event.node.data.id)
-    this.router.navigate(['/item/', event.node.data.id]);
+    if (event.node.data.children) {
+      this.router.navigate(['/group/', event.node.data.name.toLowerCase()]);
+    }
+    else {
+      this.router.navigate(['/item/', event.node.data.name.toLowerCase()]);
+    }
   }
 }
