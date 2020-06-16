@@ -1,5 +1,5 @@
 <div class="wrapper">
-  {{id}}
+  <h1 class="title">{{id}}</h1>
   <tree-root *ngIf="children && children.length; else growingUp"
              [nodes]="children"
              [options]="options"
