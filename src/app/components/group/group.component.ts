@@ -42,7 +42,6 @@ export class GroupComponent implements OnInit, OnDestroy {
         for (const group of tree) {
           this.findGroup(group);
         }
-        console.log(this.children);
       }
       else {
         this.getTree();
