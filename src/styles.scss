@@ -35,3 +35,27 @@ body {
     cursor: pointer;
   }
 }
+
+.image {
+  width: 300px;
+  height: 300px;
+  margin: 50px auto;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  &-apple {
+    background-image: url('assets/images/apple.svg');
+  }
+  &-banana {
+    background-image: url('assets/images/banana.svg');
+  }
+  &-pineapple {
+    background-image: url('assets/images/pineapple.svg');
+  }
+  &-strawberry {
+    background-image: url('assets/images/strawberry.svg');
+  }
+  &-cherry {
+    background-image: url('assets/images/cherry.svg');
+  }
+}

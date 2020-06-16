@@ -28,8 +28,8 @@
     {
       "name": "Garden",
       "children": [
-        { "name": "Raspberry" },
-        { "name": "Currant" }
+        { "name": "Strawberry" },
+        { "name": "Cherry" }
       ]
     }, {
       "name": "Wild",
