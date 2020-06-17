@@ -9,6 +9,7 @@ import { ItemComponent } from './components/item/item.component';
 import { TreeModule } from 'angular-tree-component';
 import { TreeService } from './services/tree.service';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    TreeModule.forRoot()
+    TreeModule.forRoot(),
+    FormsModule
   ],
   providers: [TreeService],
   bootstrap: [AppComponent]

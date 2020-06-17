@@ -12,7 +12,8 @@ export class TreeService {
   constructor(private http: HttpClient) {
   }
 
-  getTree(): Observable<Array<Group>> {
+  getTree(url?: string): Observable<Array<Group>> {
+    if (url) { this.url = url; }
     return this.http.get(this.url) as Observable<Array<Group>>;
   }
 }
