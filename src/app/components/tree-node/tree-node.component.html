@@ -1,0 +1,8 @@
+<span class="node-pointer" *ngIf="node.children">&#9656;</span>
+<span class="node-name">{{node.name}}</span>
+<ng-container *ngIf="node.children && node.children.length">
+  <div class="children" *ngFor="let node of node.children">
+    <app-tree-node [node]="node"></app-tree-node>
+  </div>
+</ng-container>
+

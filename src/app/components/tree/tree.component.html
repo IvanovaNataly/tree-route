@@ -7,23 +7,10 @@
     Showing the tree for: <br/>
     {{urlToShow}}
   </h1>
-  <!--<tree-root *ngIf="tree && tree.length; else growingUp"-->
-             <!--[nodes]="tree"-->
-             <!--[options]="options"-->
-             <!--(activate)="navigateTo($event)"></tree-root>-->
 
   <div class="tree" *ngIf="tree && tree.length; else growingUp">
-    <div class="node">
-      <div class="branch" *ngFor="let branch of tree">
-        <span class="branch-pointer" *ngIf="branch.children">&#9656;</span>
-        <span class="branch-name">{{branch.name}}</span>
-        <ng-container *ngIf="branch.children && branch.children.length">
-          <div class="children" *ngFor="let child of branch.children">
-            <span class="branch-pointer" *ngIf="child.children && child.children.length">&#9656;</span>
-            <span class="child">{{child.name}}</span>
-          </div>
-        </ng-container>
-      </div>
+    <div class="node" *ngFor="let node of tree">
+      <app-tree-node [node]="node"></app-tree-node>
     </div>
   </div>
 

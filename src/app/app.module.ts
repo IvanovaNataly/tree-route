@@ -10,13 +10,15 @@ import { TreeModule } from 'angular-tree-component';
 import { TreeService } from './services/tree.service';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { TreeNodeComponent } from './components/tree-node/tree-node.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TreeComponent,
     GroupComponent,
-    ItemComponent
+    ItemComponent,
+    TreeNodeComponent
   ],
   imports: [
     BrowserModule,
