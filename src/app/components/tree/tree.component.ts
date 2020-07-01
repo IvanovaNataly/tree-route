@@ -40,15 +40,6 @@ export class TreeComponent implements OnInit, OnDestroy {
     this.subscriptions = [];
   }
 
-  navigateTo(event) {
-    if (event.node.data.children) {
-      this.router.navigate(['/group/', event.node.data.name.toLowerCase()]);
-    }
-    else {
-      this.router.navigate(['/item/', event.node.data.name.toLowerCase()]);
-    }
-  }
-
   onSubmit() {
     console.log(this.userInputUrl);
     this.subscriptions.push(

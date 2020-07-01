@@ -1,7 +1,9 @@
-<span class="node-pointer" *ngIf="node.children">&#9656;</span>
-<span class="node-name">{{node.name}}</span>
-<ng-container *ngIf="node.children && node.children.length">
-  <div class="children" *ngFor="let node of node.children">
+<div class="node-container">
+  <span *ngIf="node.children" (click)="toggleChildren()" [ngClass]="{'open': showChildren, 'node-pointer': true}">&#9656;</span>
+  <span class="node-name" (click)="navigateTo($event)">{{node.name}}</span>
+</div>
+<ng-container *ngIf="showChildren && node.children && node.children.length">
+  <div class="node-child" *ngFor="let node of node.children">
     <app-tree-node [node]="node"></app-tree-node>
   </div>
 </ng-container>
