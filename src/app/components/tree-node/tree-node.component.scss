@@ -1,0 +1,28 @@
+.node {
+  &-container {
+    &:hover,
+    &:focus {
+      cursor: pointer;
+    }
+  }
+  &-pointer {
+    display: inline-block;
+    transition: transform 200ms;
+
+    &.open {
+      transform: rotate(90deg);
+    }
+  }
+
+  &-name {
+    margin-left: 10px;
+
+    .node-pointer.open + & {
+      font-weight: 600;
+    }
+  }
+
+  &-child {
+    margin-left: 23px;
+  }
+}
