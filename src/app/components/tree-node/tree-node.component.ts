@@ -50,14 +50,19 @@ export class TreeNodeComponent implements OnInit, OnDestroy {
   }
 
   getSharedTree() {
-    this.sharedService.getData().subscribe((tree: any) => {
-      if (tree) {
-        this.node = tree;
-        for (const group of this.node) {
-          this.findGroup(group);
+    this.subscriptions.push(
+      this.sharedService.getData().subscribe((tree: any) => {
+        if (tree) {
+          this.node = tree;
+          for (const group of this.node) {
+            this.findGroup(group);
+          }
         }
-      }
-    });
+        else {
+          this.getUrl();
+        }
+      })
+    );
   }
 
   findGroup(group) {
@@ -70,6 +75,16 @@ export class TreeNodeComponent implements OnInit, OnDestroy {
         this.findGroup(child);
       }
     }
+  }
+
+  getUrl() {
+    this.subscriptions.push(
+      this.sharedService.getUrl().subscribe((url: string) => {
+        if (!url) {
+          this.router.navigate(['/main']);
+        }
+      })
+    );
   }
 
 }

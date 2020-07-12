@@ -42,6 +42,15 @@ export class TreeComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     console.log(this.userInputUrl);
+    this.saveUrl();
+    this.getTree();
+  }
+
+  saveUrl() {
+    this.sharedService.setUrl(this.userInputUrl);
+  }
+
+  getTree() {
     this.subscriptions.push(
       this.treeService.getTree(this.userInputUrl).subscribe(resp => {
         if (resp && resp.length) {
