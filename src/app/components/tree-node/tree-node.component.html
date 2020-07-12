@@ -1,4 +1,4 @@
-<div class="node-container">
+<div class="node-container" *ngIf="node; else growingUp">
   <span *ngIf="node.children" (click)="toggleChildren()" [ngClass]="{'open': showChildren, 'node-pointer': true}">&#9656;</span>
   <span class="node-name" (click)="navigateTo($event)">{{node.name}}</span>
 </div>
@@ -7,4 +7,6 @@
     <app-tree-node [node]="node"></app-tree-node>
   </div>
 </ng-container>
+
+<ng-template #growingUp>the tree is growing up...</ng-template>
 
