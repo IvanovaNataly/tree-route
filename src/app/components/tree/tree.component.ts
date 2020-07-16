@@ -22,17 +22,17 @@ export class TreeComponent implements OnInit, OnDestroy {
                private router: Router ) {}
 
   ngOnInit(): void {
-    this.subscriptions.push(
-      this.treeService.getTree().subscribe(resp => {
-        if (resp && resp.length) {
-          this.sharedService.setData(resp);
-          this.tree = resp;
-        }
-        else {
-          this.serverError = true;
-        }
-      })
-    );
+    // this.subscriptions.push(
+    //   this.treeService.getTree().subscribe(resp => {
+    //     if (resp && resp.length) {
+    //       this.sharedService.setData(resp);
+    //       this.tree = resp;
+    //     }
+    //     else {
+    //       this.serverError = true;
+    //     }
+    //   })
+    // );
   }
 
   ngOnDestroy(): void {
@@ -58,7 +58,6 @@ export class TreeComponent implements OnInit, OnDestroy {
           this.tree = resp;
           this.urlToShow = this.userInputUrl;
           this.userInputUrl = '';
-          console.log(this.tree);
         }
         else {
           this.serverError = true;

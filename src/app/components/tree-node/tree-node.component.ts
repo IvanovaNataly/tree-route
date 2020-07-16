@@ -12,6 +12,8 @@ export class TreeNodeComponent implements OnInit, OnDestroy {
   @Input() node;
   public showChildren: boolean;
   public id: string;
+  public name: string;
+  public children: Array<any>;
   private subscriptions: SubscriptionLike[] = [];
 
   constructor( private router: Router,
@@ -28,6 +30,8 @@ export class TreeNodeComponent implements OnInit, OnDestroy {
         })
       );
     }
+    this.setName();
+    this.setChildren();
   }
 
   ngOnDestroy(): void {
@@ -41,7 +45,7 @@ export class TreeNodeComponent implements OnInit, OnDestroy {
 
   navigateTo(event) {
     const name = event.target.innerText;
-    if (this.node.children && this.node.children.length) {
+    if (this.children && this.children.length) {
       this.router.navigate(['/group/', name.toLowerCase()]);
     }
     else {
@@ -68,11 +72,20 @@ export class TreeNodeComponent implements OnInit, OnDestroy {
   findGroup(group) {
     if (group.name && group.name.toLowerCase() === this.id) {
       this.node = group;
+      this.setName();
+      this.setChildren();
       return;
     }
-    if (group.children && group.children.length) {
-      for (const child of group.children) {
-        this.findGroup(child);
+    for (const prop in group) {
+      if (this.checkArray(group, prop)) {
+        if (this.checkName(prop)) {
+          this.node = group;
+          this.name = prop;
+        } else {
+          for (const child of group[prop]) {
+            this.findGroup(child);
+          }
+        }
       }
     }
   }
@@ -85,6 +98,56 @@ export class TreeNodeComponent implements OnInit, OnDestroy {
         }
       })
     );
+  }
+
+  setName() {
+    if (!this.node) return;
+
+    switch (true) {
+      case (!!this.node.name):
+        this.name = this.node.name;
+        break;
+      case (!!this.node.username):
+        this.name = this.node.username;
+        break;
+      case (!!this.node.title):
+        this.name = this.node.title;
+        break;
+      case (!!this.node.id):
+        this.name = this.node.id;
+        break;
+      default:
+        this.name = Object.keys(this.node)[0];
+    }
+  }
+
+  setChildren() {
+    if (!this.node) return;
+
+    if (this.node.children) {
+      this.children = this.node.children;
+    }
+    else {
+      for (const prop in this.node) {
+        if (this.checkArray(this.node, prop)) {
+          this.children = this.node[prop];
+        }
+      }
+    }
+  }
+
+  checkArray(node, prop) {
+    if (Object.prototype.hasOwnProperty.call(node, prop) &&
+      node[prop].constructor === Array &&
+      node[prop].length) {
+      return true;
+    }
+  }
+
+  checkName(prop) {
+    if (prop.toLowerCase() === this.id) {
+      return true;
+    }
   }
 
 }
