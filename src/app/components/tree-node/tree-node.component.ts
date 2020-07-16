@@ -81,6 +81,7 @@ export class TreeNodeComponent implements OnInit, OnDestroy {
         if (this.checkName(prop)) {
           this.node = group;
           this.name = prop;
+          this.setChildren();
         } else {
           for (const child of group[prop]) {
             this.findGroup(child);
