@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SubscriptionLike } from 'rxjs/index';
+import { TreeService } from '../../services/tree.service';
 
 @Component({
   selector: 'app-item',
@@ -9,15 +10,18 @@ import { SubscriptionLike } from 'rxjs/index';
 })
 export class ItemComponent implements OnInit, OnDestroy {
   public id: string;
+  public itemImage: string;
+  public serverError: boolean;
   private subscriptions: SubscriptionLike[] = [];
 
-  constructor(private route: ActivatedRoute) { }
+  constructor( private route: ActivatedRoute,
+               private treeService: TreeService ) { }
 
   ngOnInit(): void {
     this.subscriptions.push(
-    this.route.params.subscribe((params: any) => {
+      this.route.params.subscribe((params: any) => {
         this.id = params.id;
-        console.log(this.id);
+        this.getItemImage();
       })
     );
   }
@@ -25,6 +29,14 @@ export class ItemComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
     this.subscriptions = [];
+  }
+
+  getItemImage() {
+    this.subscriptions.push(
+      this.treeService.getItemImage(this.id).subscribe(resp => {
+        resp ? ( this.itemImage = resp.toString() ) : this.serverError = true;
+      })
+    );
   }
 
 }

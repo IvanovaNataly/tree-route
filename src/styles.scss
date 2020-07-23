@@ -37,37 +37,4 @@ body {
   }
 }
 
-%image-with-bg {
-  height: 300px;
-  margin-top: 50px;
-  margin-bottom: 50px;
-}
 
-.image {
-  width: 300px;
-  margin-right: auto;
-  margin-left: auto;
-  background-repeat: no-repeat;
-  background-size: cover;
-
-  &-apple {
-    @extend %image-with-bg;
-    background-image: url('assets/images/apple.svg');
-  }
-  &-banana {
-    @extend %image-with-bg;
-    background-image: url('assets/images/banana.svg');
-  }
-  &-pineapple {
-    @extend %image-with-bg;
-    background-image: url('assets/images/pineapple.svg');
-  }
-  &-strawberry {
-    @extend %image-with-bg;
-    background-image: url('assets/images/strawberry.svg');
-  }
-  &-cherry {
-    @extend %image-with-bg;
-    background-image: url('assets/images/cherry.svg');
-  }
-}
