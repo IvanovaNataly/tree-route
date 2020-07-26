@@ -22,7 +22,7 @@ export class TreeService {
     return this.http.get(requestUrl) as Observable<Array<Group>>;
   }
 
-  getItemImage(id: string): Observable<Array<string>> {
+  getItemImage(id: string): Observable<any> {
     return this.http.get(routes.id(id));
   }
 }
