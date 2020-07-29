@@ -1,16 +1,13 @@
-const http = require('http');
+const express = require('express');
+const app = express();
 
-const  server = http.createServer( (request, response) => {
-  if (request.url === '/') {
-    response.write('base url');
-    response.end();
-  }
-  if (request.url === '/users') {
-    response.write(JSON.stringify([1, 2, 3]));
-    response.end();
-  }
+app.get('/', (req, res) => {
+  res.send('You are on the base');
 });
 
-server.listen('3000');
+app.get('/users', (req, res) => {
+  res.send(JSON.stringify([1, 2, 3]));
+});
 
-console.log('listening...');
+app.listen('3000', () => console.log('listening...'));
+
