@@ -13,7 +13,8 @@ if(app.get('env') === 'development') {
   debug(app.get('env') );
 }
 
-
+app.set('view engine', 'pug');
+app.set('views', './views'); //default
 
 const courses = [
   { 'id': 1,
@@ -28,7 +29,11 @@ const courses = [
 ];
 
 app.get('/', (req, res) => {
-  res.send('You are on the base');
+  // res.send('You are on the base');
+  res.render('index', {
+    title: 'My express app',
+    header: 'Hello'
+  })
 });
 
 app.get('/api/courses', (req, res) => {
