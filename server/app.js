@@ -1,13 +1,19 @@
+const debug = require('debug')('app:startup');
+const morgan = require('morgan');
 const Joi = require('joi');
 const logger = require('./logger');
 const authentication = require('./authentication');
 const express = require('express');
 const app = express();
+
 app.use(express.json());
 
-app.use(logger);
+if(app.get('env') === 'development') {
+  app.use(morgan('tiny'));
+  debug(app.get('env') );
+}
 
-app.use(authentication);
+
 
 const courses = [
   { 'id': 1,
