@@ -6,7 +6,8 @@ import { SubscriptionLike } from 'rxjs';
 import { SharedService } from '../../services/shared.service';
 
 
-import { BehaviorSubject } from 'rxjs/index';
+import {BehaviorSubject, Observable} from 'rxjs/index';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-tree',
@@ -21,10 +22,18 @@ export class TreeComponent implements OnInit, OnDestroy {
   public urlToShow: string;
 
   userCardNumber = new BehaviorSubject<string>(null);
+  cardNumber: Observable;
 
   constructor( private treeService: TreeService,
                private sharedService: SharedService,
-               private router: Router ) {}
+               private router: Router ) {
+
+    this.cardNumber = this.userCardNumber.pipe(map((card) => {
+      if (card) {
+        return card.replace(/[\s-]/g, "");
+      }
+    }));
+  }
 
   ngOnInit(): void {
     this.subscriptions.push(
