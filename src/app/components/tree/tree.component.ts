@@ -5,6 +5,9 @@ import { Group } from '../../interfaces/group.interface';
 import { SubscriptionLike } from 'rxjs';
 import { SharedService } from '../../services/shared.service';
 
+
+import { BehaviorSubject } from 'rxjs/index';
+
 @Component({
   selector: 'app-tree',
   templateUrl: './tree.component.html',
@@ -16,6 +19,8 @@ export class TreeComponent implements OnInit, OnDestroy {
   public serverError: boolean;
   public userInputUrl: string;
   public urlToShow: string;
+
+  userCardNumber = new BehaviorSubject<string>(null);
 
   constructor( private treeService: TreeService,
                private sharedService: SharedService,
