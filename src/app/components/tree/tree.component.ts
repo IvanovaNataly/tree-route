@@ -7,7 +7,7 @@ import { SharedService } from '../../services/shared.service';
 
 
 import {BehaviorSubject, Observable} from 'rxjs/index';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-tree',
@@ -35,7 +35,9 @@ export class TreeComponent implements OnInit, OnDestroy {
       }
     }));
 
-    this.errorMessage = this.userCardNumber.pipe(map((card: string) => {
+    this.errorMessage = this.userCardNumber.pipe(
+      tap(value => console.log(name, value)),
+      map((card: string) => {
       if (!card) {
         return 'There is no card';
       }
