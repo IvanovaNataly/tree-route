@@ -22,7 +22,8 @@ export class TreeComponent implements OnInit, OnDestroy {
   public urlToShow: string;
 
   userCardNumber = new BehaviorSubject<string>(null);
-  cardNumber: Observable;
+  cardNumber: Observable<string>;
+  errorMessage: any;
 
   constructor( private treeService: TreeService,
                private sharedService: SharedService,
@@ -31,6 +32,15 @@ export class TreeComponent implements OnInit, OnDestroy {
     this.cardNumber = this.userCardNumber.pipe(map((card) => {
       if (card) {
         return card.replace(/[\s-]/g, "");
+      }
+    }));
+
+    this.errorMessage = this.userCardNumber.pipe(map((card: string) => {
+      if (!card) {
+        return 'There is no card';
+      }
+      if (card.length !== 16) {
+        return 'There should be 16 characters in a card';
       }
     }));
   }
