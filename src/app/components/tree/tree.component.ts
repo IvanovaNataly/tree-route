@@ -34,17 +34,22 @@ export class TreeComponent implements OnInit, OnDestroy {
         return card.replace(/[\s-]/g, "");
       }
     }));
-
+    
     this.errorMessage = this.userCardNumber.pipe(
       tap(value => console.log(name, value)),
-      map((card: string) => {
+      this.validateCard()
+    );
+  }
+
+  validateCard() {
+    return map((card: string) => {
       if (!card) {
         return 'There is no card';
       }
       if (card.length !== 16) {
         return 'There should be 16 characters in a card';
       }
-    }));
+    });
   }
 
   ngOnInit(): void {
