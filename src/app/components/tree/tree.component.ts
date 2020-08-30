@@ -6,7 +6,7 @@ import { SubscriptionLike } from 'rxjs';
 import { SharedService } from '../../services/shared.service';
 
 
-import {BehaviorSubject, Observable} from 'rxjs/index';
+import {BehaviorSubject, Observable, combineLatest } from 'rxjs/index';
 import { map, tap } from 'rxjs/operators';
 
 @Component({
@@ -22,8 +22,11 @@ export class TreeComponent implements OnInit, OnDestroy {
   public urlToShow: string;
 
   userCardNumber = new BehaviorSubject<string>(null);
+  cvcNumber = new BehaviorSubject<string>(null);
   cardNumber: Observable<string>;
   errorMessage: any;
+  cvcError: any;
+  invalidCard: any;
 
   constructor( private treeService: TreeService,
                private sharedService: SharedService,
@@ -34,11 +37,15 @@ export class TreeComponent implements OnInit, OnDestroy {
         return card.replace(/[\s-]/g, "");
       }
     }));
-    
+
     this.errorMessage = this.userCardNumber.pipe(
       tap(value => console.log(name, value)),
       this.validateCard()
     );
+
+    this.cvcError = this.cvcNumber.pipe(this.validateCvc());
+
+    this.invalidCard = this.isCardInvalid();
   }
 
   validateCard() {
@@ -49,6 +56,26 @@ export class TreeComponent implements OnInit, OnDestroy {
       if (card.length !== 16) {
         return 'There should be 16 characters in a card';
       }
+    });
+  }
+
+  validateCvc() {
+    return map((cvc: string) => {
+      if (!cvc) {
+        return 'There is no CVC';
+      }
+      if (cvc.length !== 3) {
+        return 'The CVC must be at least 3 numbers';
+      }
+      if (isNaN(parseInt(cvc, 0))) {
+        return 'The CVC must be numbers';
+      }
+    });
+  }
+
+  isCardInvalid() {
+    return combineLatest(this.errorMessage, this.cvcError, (cardError, cvcError) => {
+      return (!!(cardError || cvcError));
     });
   }
 
